@@ -2,7 +2,7 @@
 
 #include <vcl.h>
 #pragma hdrstop
-
+ 
 #include "Unit1.h"
 #include <math>
 //---------------------------------------------------------------------------
@@ -11,30 +11,30 @@
 TForm1 *Form1;
 
 
-long double Evm = -4.65*pow(10,-19);  // энергия активации вакансий
-long double Eim = -1.38*pow(10,-20); // энергия активации SIA
-int T=500; // температура
+long double Evm = -4.65*pow(10,-19);  // ГЅГ­ГҐГ°ГЈГЁГї Г ГЄГІГЁГўГ Г¶ГЁГЁ ГўГ ГЄГ Г­Г±ГЁГ©
+long double Eim = -1.38*pow(10,-20); // ГЅГ­ГҐГ°ГЈГЁГї Г ГЄГІГЁГўГ Г¶ГЁГЁ SIA
+int T=500; // ГІГҐГ¬ГЇГҐГ°Г ГІГіГ°Г 
 
-long double Esvv = -4.8*pow(10,-19); //энергия связи для вакансий
-long double Esvi = -1.38*pow(10,-21); // энергия связи для SIA
-long double w0= 1.0*pow(10,13); // частота дебая
+long double Esvv = -4.8*pow(10,-19); //ГЅГ­ГҐГ°ГЈГЁГї Г±ГўГїГ§ГЁ Г¤Г«Гї ГўГ ГЄГ Г­Г±ГЁГ©
+long double Esvi = -1.38*pow(10,-21); // ГЅГ­ГҐГ°ГЈГЁГї Г±ГўГїГ§ГЁ Г¤Г«Гї SIA
+long double w0= 1.0*pow(10,13); // Г·Г Г±ГІГ®ГІГ  Г¤ГҐГЎГ Гї
 
 
-long double dist = 2.35*pow(10,-10); //дистанция скачка
-long double recomb = 4*pow(10,-10); // дистанция рекомбинации
+long double dist = 2.35*pow(10,-10); //Г¤ГЁГ±ГІГ Г­Г¶ГЁГї Г±ГЄГ Г·ГЄГ 
+long double recomb = 4*pow(10,-10); // Г¤ГЁГ±ГІГ Г­Г¶ГЁГї Г°ГҐГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГЁ
 long double kb = 1.380649*pow(10,-23); 
 
-int p_conc=10; //радиус для расчета локальной концентрации
+int p_conc=10; //Г°Г Г¤ГЁГіГ± Г¤Г«Гї Г°Г Г±Г·ГҐГІГ  Г«Г®ГЄГ Г«ГјГ­Г®Г© ГЄГ®Г­Г¶ГҐГ­ГІГ°Г Г¶ГЁГЁ
 
 
 //---------------------------------------------------------------------------
 __fastcall TForm1::TForm1(TComponent* Owner)
         : TForm(Owner)
 {
-   n=100; // размер решетки
+   n=100; // Г°Г Г§Г¬ГҐГ° Г°ГҐГёГҐГІГЄГЁ
 //   sum=pow(10,3);
 
-   // инициализация структур
+   // ГЁГ­ГЁГ¶ГЁГ Г«ГЁГ§Г Г¶ГЁГї Г±ГІГ°ГіГЄГІГіГ°
    (unsigned int *)matrix=(unsigned int *)new int[sizeof(int)*(2*n+1)];
    for(int i=0;i<2*n;i++) (unsigned int *)matrix[i]=(unsigned int *)new int[sizeof(int)*(2*n+1)];
 
@@ -49,7 +49,7 @@ __fastcall TForm1::TForm1(TComponent* Owner)
 
 bool __fastcall TForm1::GetSIA(int x,int y)
 {
-    // возвращает наличие SIA в позиции
+    // ГўГ®Г§ГўГ°Г Г№Г ГҐГІ Г­Г Г«ГЁГ·ГЁГҐ SIA Гў ГЇГ®Г§ГЁГ¶ГЁГЁ
     int x1=2*x+1;
     int y1=2*y+1;
     if(x1<0) x1=x1+2*n;
@@ -65,7 +65,7 @@ bool __fastcall TForm1::GetSIA(int x,int y)
 
 long double __fastcall TForm1::GetEventSIA(int x,int y,int index)
 {
-    // возвращает частоту перехода для SIA в заданном направлении
+    // ГўГ®Г§ГўГ°Г Г№Г ГҐГІ Г·Г Г±ГІГ®ГІГі ГЇГҐГ°ГҐГµГ®Г¤Г  Г¤Г«Гї SIA Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ
 
     if(index<0 || index>3) return -1;
     int x1=2*x+1;
@@ -83,7 +83,7 @@ long double __fastcall TForm1::GetEventSIA(int x,int y,int index)
 
 void __fastcall TForm1::SetSIA(int x,int y,bool Value)
 {
-    // устанавливает наличие/отсутствие SIA в позиции
+    // ГіГ±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГІ Г­Г Г«ГЁГ·ГЁГҐ/Г®ГІГ±ГіГІГ±ГІГўГЁГҐ SIA Гў ГЇГ®Г§ГЁГ¶ГЁГЁ
     int x1=2*x+1;
     int y1=2*y+1;
     if(x1<0) x1=x1+2*n;
@@ -100,7 +100,7 @@ void __fastcall TForm1::SetSIA(int x,int y,bool Value)
 void __fastcall TForm1::SetEventSIA(int x,int y,int index,long double Value)
 {
 
-    // устанавливает частоту перехода для SIA в заданном направлении
+    // ГіГ±ГІГ Г­Г ГўГ«ГЁГўГ ГҐГІ Г·Г Г±ГІГ®ГІГі ГЇГҐГ°ГҐГµГ®Г¤Г  Г¤Г«Гї SIA Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ
 
     if(index<0 || index>3) return;
     int x1=2*x+1;
@@ -184,7 +184,7 @@ void __fastcall TForm1::SetVAC(int x,int y,bool Value)
 
 bool __fastcall TForm1::GetNearVAC(int x,int y,int index)
 {
-  // возвращает ближайший SIA в заданном направлении
+  // ГўГ®Г§ГўГ°Г Г№Г ГҐГІ ГЎГ«ГЁГ¦Г Г©ГёГЁГ© SIA Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ
   if(index<0 || index>3) return true;
   switch(index)
   {
@@ -199,7 +199,7 @@ bool __fastcall TForm1::GetNearVAC(int x,int y,int index)
 
 long double __fastcall TForm1::GetConcSIAFull(int x,int y)
 {
-    // возвращает локальную концентрацию SIA в позиции
+    // ГўГ®Г§ГўГ°Г Г№Г ГҐГІ Г«Г®ГЄГ Г«ГјГ­ГіГѕ ГЄГ®Г­Г¶ГҐГ­ГІГ°Г Г¶ГЁГѕ SIA Гў ГЇГ®Г§ГЁГ¶ГЁГЁ
     int result=0;
     int n=p_conc;
     for(int i=-n;i<=n;i++)
@@ -217,7 +217,7 @@ long double __fastcall TForm1::GetConcSIAFull(int x,int y)
 
 long double __fastcall TForm1::GetConcSIA(int x,int y,int index)
 {
-    // возвращает локальную концентрацию SIA в позиции в заданном направлении
+    // ГўГ®Г§ГўГ°Г Г№Г ГҐГІ Г«Г®ГЄГ Г«ГјГ­ГіГѕ ГЄГ®Г­Г¶ГҐГ­ГІГ°Г Г¶ГЁГѕ SIA Гў ГЇГ®Г§ГЁГ¶ГЁГЁ Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ
     int result=0;
     int n=p_conc;
     switch(index)
@@ -376,7 +376,7 @@ bool __fastcall TForm1::GetNearSIA(int x,int y,int index)
 
 void __fastcall TForm1::CalculateRatesVAC(int x,int y)
 {
-   // пересчитывает частоты переходов вакансий в заданной позиции
+   // ГЇГҐГ°ГҐГ±Г·ГЁГІГ»ГўГ ГҐГІ Г·Г Г±ГІГ®ГІГ» ГЇГҐГ°ГҐГµГ®Г¤Г®Гў ГўГ ГЄГ Г­Г±ГЁГ© Гў Г§Г Г¤Г Г­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ
     if(!GetVAC(x,y))
    {
       for(int i=0;i<4;i++)
@@ -415,7 +415,7 @@ void __fastcall TForm1::CalculateRatesVAC(int x,int y)
 
 int __fastcall TForm1::RecombinationStep(int x,int y,int dx,int dy)
 {
-         // выполняет рекомбинацию дефектов на заданном расстоянии для позиции
+         // ГўГ»ГЇГ®Г«Г­ГїГҐГІ Г°ГҐГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГѕ Г¤ГҐГґГҐГЄГІГ®Гў Г­Г  Г§Г Г¤Г Г­Г­Г®Г¬ Г°Г Г±Г±ГІГ®ГїГ­ГЁГЁ Г¤Г«Гї ГЇГ®Г§ГЁГ¶ГЁГЁ
          int Result=0;
          if(GetSIA(x+dx,y+dy) && GetVAC(x,y))
          {
@@ -442,7 +442,7 @@ int __fastcall TForm1::RecombinationStep(int x,int y,int dx,int dy)
 
 int __fastcall TForm1::RecombinationVACSIA(int x,int y)
 {
-   //выполняет рекомбинацию дефектов для dist и recomb
+   //ГўГ»ГЇГ®Г«Г­ГїГҐГІ Г°ГҐГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГѕ Г¤ГҐГґГҐГЄГІГ®Гў Г¤Г«Гї dist ГЁ recomb
    int index=ceil(recomb/(dist*sqrt(2)));
 //   RecombinationStep(x,y,0,0);
 
@@ -466,7 +466,7 @@ int __fastcall TForm1::RecombinationVACSIA(int x,int y)
 
 void __fastcall TForm1::CalculateRatesSIA(int x,int y)
 {
-   // пересчитывает частоты переходов SIA в заданной позиции
+   // ГЇГҐГ°ГҐГ±Г·ГЁГІГ»ГўГ ГҐГІ Г·Г Г±ГІГ®ГІГ» ГЇГҐГ°ГҐГµГ®Г¤Г®Гў SIA Гў Г§Г Г¤Г Г­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ
 
    if(!GetSIA(x,y))
    {
@@ -507,7 +507,7 @@ void __fastcall TForm1::CalculateRatesSIA(int x,int y)
 long double __fastcall TForm1::CalculateMuVAC(int x,int y)
 {
 
-// вычисляет химический потенциал для вакансий
+// ГўГ»Г·ГЁГ±Г«ГїГҐГІ ГµГЁГ¬ГЁГ·ГҐГ±ГЄГЁГ© ГЇГ®ГІГҐГ­Г¶ГЁГ Г« Г¤Г«Гї ГўГ ГЄГ Г­Г±ГЁГ©
    long double up,down,right,left;
 
    right=GetConcVACFull(x+1,y);
@@ -535,7 +535,7 @@ long double __fastcall TForm1::CalculateMuVAC(int x,int y)
 
 long double __fastcall TForm1::CalculateEnergyVAC(int x,int y)
 {
-// вычисляет изменеие концентрации вакансий в заданной позиции по кан-хилларду
+// ГўГ»Г·ГЁГ±Г«ГїГҐГІ ГЁГ§Г¬ГҐГ­ГҐГЁГҐ ГЄГ®Г­Г¶ГҐГ­ГІГ°Г Г¶ГЁГЁ ГўГ ГЄГ Г­Г±ГЁГ© Гў Г§Г Г¤Г Г­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® ГЄГ Г­-ГµГЁГ«Г«Г Г°Г¤Гі
    long double up,down,right,left;
    long double dup,ddown,dright,dleft;
    long double dirxl,dirxr,diryu,diryd;
@@ -572,7 +572,7 @@ long double __fastcall TForm1::CalculateEnergyVAC(int x,int y)
 
 long double __fastcall TForm1::CalculateEnergySIA(int x,int y)
 {
-// вычисляет изменеие концентрации SIA в заданной позиции по кан-хилларду
+// ГўГ»Г·ГЁГ±Г«ГїГҐГІ ГЁГ§Г¬ГҐГ­ГҐГЁГҐ ГЄГ®Г­Г¶ГҐГ­ГІГ°Г Г¶ГЁГЁ SIA Гў Г§Г Г¤Г Г­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ ГЇГ® ГЄГ Г­-ГµГЁГ«Г«Г Г°Г¤Гі
    long double up,down,right,left;
    long double dup,ddown,dright,dleft;
    long double dirxl,dirxr,diryu,diryd;
@@ -615,7 +615,7 @@ long double __fastcall TForm1::CalculateEnergySIA(int x,int y)
 long double __fastcall TForm1::CalculateRateVAC(int x,int y,int index)
 {
 
-  //вычисляет частоту перехода в заданном направлении для вакансий 
+  //ГўГ»Г·ГЁГ±Г«ГїГҐГІ Г·Г Г±ГІГ®ГІГі ГЇГҐГ°ГҐГµГ®Г¤Г  Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ Г¤Г«Гї ГўГ ГЄГ Г­Г±ГЁГ© 
   long double Result;
   int x1;
   int y1;
@@ -641,7 +641,7 @@ long double __fastcall TForm1::CalculateRateVAC(int x,int y,int index)
 long double __fastcall TForm1::CalculateRateSIA(int x,int y,int index)
 {
 
-  //вычисляет частоту перехода в заданном направлении для SIA
+  //ГўГ»Г·ГЁГ±Г«ГїГҐГІ Г·Г Г±ГІГ®ГІГі ГЇГҐГ°ГҐГµГ®Г¤Г  Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ Г¤Г«Гї SIA
   long double Result;
   int x1;
   int y1;
@@ -669,7 +669,7 @@ long double __fastcall TForm1::CalculateRateSIA(int x,int y,int index)
 
 void __fastcall TForm1::RunHopVAC(int x,int y,int index)
 {
-  //совершает скачок вакансии в заданном направлении
+  //Г±Г®ГўГҐГ°ГёГ ГҐГІ Г±ГЄГ Г·Г®ГЄ ГўГ ГЄГ Г­Г±ГЁГЁ Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ
    int x1;
    int y1;
    if(GetVAC(x,y))
@@ -695,7 +695,7 @@ void __fastcall TForm1::RunHopVAC(int x,int y,int index)
 
 void __fastcall TForm1::RunHopSIA(int x,int y,int index)
 {
-//совершает скачок SIA в заданном направлении
+//Г±Г®ГўГҐГ°ГёГ ГҐГІ Г±ГЄГ Г·Г®ГЄ SIA Гў Г§Г Г¤Г Г­Г­Г®Г¬ Г­Г ГЇГ°Г ГўГ«ГҐГ­ГЁГЁ
    int x1;
    int y1;
    if(GetSIA(x,y))
@@ -721,7 +721,7 @@ void __fastcall TForm1::RunHopSIA(int x,int y,int index)
 
 void __fastcall TForm1::DrawSIA(int x,int y)
 {
-//отрисовка SIA в заданной позиции
+//Г®ГІГ°ГЁГ±Г®ГўГЄГ  SIA Гў Г§Г Г¤Г Г­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ
     int scal=Panel1->Height/(2*n);
     int gx=(2*x+1)*scal;
     int gy=Panel1->Height-(2*y+1)*scal;
@@ -741,7 +741,7 @@ void __fastcall TForm1::DrawSIA(int x,int y)
 
 void __fastcall TForm1::GenerateOneDefect(void)
 {
-//генерация одного дефекта френкеля
+//ГЈГҐГ­ГҐГ°Г Г¶ГЁГї Г®Г¤Г­Г®ГЈГ® Г¤ГҐГґГҐГЄГІГ  ГґГ°ГҐГ­ГЄГҐГ«Гї
     int l=0;
     while(l<1)
     {
@@ -776,7 +776,7 @@ void __fastcall TForm1::GenerateOneDefect(void)
 
 long double __fastcall TForm1::GetSumEventsSIA(void)
 {
-//получить сумму частот для SIA
+//ГЇГ®Г«ГіГ·ГЁГІГј Г±ГіГ¬Г¬Гі Г·Г Г±ГІГ®ГІ Г¤Г«Гї SIA
     long double sum=0;
     for(int x=0;x<n;x++)
       for(int y=0;y<n;y++)
@@ -791,7 +791,7 @@ long double __fastcall TForm1::GetSumEventsSIA(void)
 
 long double __fastcall TForm1::GetSumEventsVAC(void)
 {
-//получить сумму частот для вакансий
+//ГЇГ®Г«ГіГ·ГЁГІГј Г±ГіГ¬Г¬Гі Г·Г Г±ГІГ®ГІ Г¤Г«Гї ГўГ ГЄГ Г­Г±ГЁГ©
     long double sum=0;
     for(int x=0;x<n;x++)
       for(int y=0;y<n;y++)
@@ -838,7 +838,7 @@ void __fastcall TForm1::GetEventUpBelowSIA(long double sum,CurrentHop &ch)
 
 void __fastcall TForm1::GetEventUpBelow(long double sum,CurrentHop &ch)
 {
-//получить событие перехода ближайшее меньшее к порогу по сумме
+//ГЇГ®Г«ГіГ·ГЁГІГј Г±Г®ГЎГ»ГІГЁГҐ ГЇГҐГ°ГҐГµГ®Г¤Г  ГЎГ«ГЁГ¦Г Г©ГёГҐГҐ Г¬ГҐГ­ГјГёГҐГҐ ГЄ ГЇГ®Г°Г®ГЈГі ГЇГ® Г±ГіГ¬Г¬ГҐ
   long double factor=random(100000)*1.0/(100000*1.0);
   long double por=sum*factor;
   long double det_sum=0;
@@ -913,7 +913,7 @@ void __fastcall TForm1::GetEventUpBelowVAC(long double sum,CurrentHop &ch)
 
 void __fastcall TForm1::DrawVAC(int x,int y)
 {
-//отрисовка вакансии в заданной позиции
+//Г®ГІГ°ГЁГ±Г®ГўГЄГ  ГўГ ГЄГ Г­Г±ГЁГЁ Гў Г§Г Г¤Г Г­Г­Г®Г© ГЇГ®Г§ГЁГ¶ГЁГЁ
     int scal=Panel1->Height/(2*n);
     int gx=(2*x)*scal;
     int gy=Panel1->Height-(2*y)*scal;
@@ -933,7 +933,7 @@ void __fastcall TForm1::DrawVAC(int x,int y)
 
 void __fastcall TForm1::DrawAllVAC(void)
 {
-//отрисовка вакансий
+//Г®ГІГ°ГЁГ±Г®ГўГЄГ  ГўГ ГЄГ Г­Г±ГЁГ©
    for(int x=0;x<n;x++) for(int y=0;y<n;y++) DrawVAC(x,y);
 }
 
@@ -941,57 +941,57 @@ void __fastcall TForm1::DrawAllVAC(void)
 
 void __fastcall TForm1::DrawAllSIA(void)
 {
-//отрисовка SIA
+//Г®ГІГ°ГЁГ±Г®ГўГЄГ  SIA
    for(int x=0;x<n;x++) for(int y=0;y<n;y++) DrawSIA(x,y);
 }
 
 //---------------------------------------------------------------------------
 void __fastcall TForm1::Button1Click(TObject *Sender)
 {
-// основной цикл обработки
+// Г®Г±Г­Г®ГўГ­Г®Г© Г¶ГЁГЄГ« Г®ГЎГ°Г ГЎГ®ГІГЄГЁ
   int cnt=int(n*n*1/100);
-// генерация 1% дефектов случайным образом
+// ГЈГҐГ­ГҐГ°Г Г¶ГЁГї 1% Г¤ГҐГґГҐГЄГІГ®Гў Г±Г«ГіГ·Г Г©Г­Г»Г¬ Г®ГЎГ°Г Г§Г®Г¬
   randomize();
   int l=0;
   for(int i=0;i<cnt;i++) GenerateOneDefect();
 
-// выполняется рекомбинация после генерации
+// ГўГ»ГЇГ®Г«Г­ГїГҐГІГ±Гї Г°ГҐГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГї ГЇГ®Г±Г«ГҐ ГЈГҐГ­ГҐГ°Г Г¶ГЁГЁ
   for(int x=0;x<n;x++)
     for(int y=0;y<n;y++)
     {
        RecombinationVACSIA(x,y);
     }
-//  отрисовка;
+//  Г®ГІГ°ГЁГ±Г®ГўГЄГ ;
   DrawAllVAC();
 
   for(int j=0;j<1000000;j++)
   {
 
     int Res=0;
-// выполняется рекомбинация после генерации
+// ГўГ»ГЇГ®Г«Г­ГїГҐГІГ±Гї Г°ГҐГЄГ®Г¬ГЎГЁГ­Г Г¶ГЁГї ГЇГ®Г±Г«ГҐ ГЈГҐГ­ГҐГ°Г Г¶ГЁГЁ
     for(int x=0;x<n;x++) for(int y=0;y<n;y++) Res+=RecombinationVACSIA(x,y);
 
 //===============================================================
-    //выполняется генерация дефекта на каждом деятом шаге алгоритма
+    //ГўГ»ГЇГ®Г«Г­ГїГҐГІГ±Гї ГЈГҐГ­ГҐГ°Г Г¶ГЁГї Г¤ГҐГґГҐГЄГІГ  Г­Г  ГЄГ Г¦Г¤Г®Г¬ Г¤ГҐГїГІГ®Г¬ ГёГ ГЈГҐ Г Г«ГЈГ®Г°ГЁГІГ¬Г 
     if(!(j%10)) GenerateOneDefect();
 //===============================================================
 
-//получаем суммы частот всех переходов
+//ГЇГ®Г«ГіГ·Г ГҐГ¬ Г±ГіГ¬Г¬Г» Г·Г Г±ГІГ®ГІ ГўГ±ГҐГµ ГЇГҐГ°ГҐГµГ®Г¤Г®Гў
 
     sum_s=GetSumEventsSIA();
     sum_v=GetSumEventsVAC();
 
-//получаем необходимый нам переход
+//ГЇГ®Г«ГіГ·Г ГҐГ¬ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г»Г© Г­Г Г¬ ГЇГҐГ°ГҐГµГ®Г¤
     CurrentHop ch;
     GetEventUpBelow(sum_s+sum_v,ch);
 
-// выполняем переход
+// ГўГ»ГЇГ®Г«Г­ГїГҐГ¬ ГЇГҐГ°ГҐГµГ®Г¤
     switch(ch.type)
     {
        case 1: RunHopSIA(ch.x,ch.y,ch.direct); break;
        case 2: RunHopVAC(ch.x,ch.y,ch.direct); break;
     }
-// отрисовка на каждом 1000-ном шаге
+// Г®ГІГ°ГЁГ±Г®ГўГЄГ  Г­Г  ГЄГ Г¦Г¤Г®Г¬ 1000-Г­Г®Г¬ ГёГ ГЈГҐ
     if(!(j%1000))
     {
       DrawAllVAC();
